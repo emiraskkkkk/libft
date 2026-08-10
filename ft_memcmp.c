@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                       :::      ::::::::    */
-/*   ft_memcpy.c                                       :+:      :+:    :+:    */
+/*   ft_memcmp.c                                       :+:      :+:    :+:    */
 /*                                                   +:+ +:+         +:+      */
 /*   By: masik <masik@student.42istanbul.com.tr>   #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
-/*   Created: 2026/08/05 20:42:13 by masik            #+#    #+#              */
-/*   Updated: 2026/08/07 16:51:59 by masik           ###   ########.fr        */
+/*   Created: 2026/08/07 18:15:21 by masik            #+#    #+#              */
+/*   Updated: 2026/08/07 18:59:03 by masik           ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	const unsigned char	*str;
-	unsigned char		*ptr;
 	size_t				i;
+	const unsigned char	*str;
+	const unsigned char	*ptr;
 
-	if (!dst && !src)
-		return (dst);
-	str = (const unsigned char *) src;
-	ptr = (unsigned char *) dst;
+	str = (const unsigned char *) s1;
+	ptr = (const unsigned char *) s2;
 	i = 0;
 	while (i < n)
 	{
-		ptr[i] = str[i];
+		if (str[i] != ptr[i])
+			return ((unsigned char) str[i] - (unsigned char) ptr[i]);
 		i++;
 	}
-	return (dst);
+	return (0);
 }
