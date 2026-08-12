@@ -6,7 +6,7 @@
 /*   By: masik <masik@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 15:53:52 by masik             #+#    #+#             */
-/*   Updated: 2026/08/06 16:28:18 by masik            ###   ########.fr       */
+/*   Updated: 2026/08/13 00:16:10 by masik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	j;
 
 	i = 0;
-	j = 0;
 	if (little[0] == '\0')
-		return (big);
+		return ((char *) big);
 	while (big[i] && i < len)
 	{
 		j = 0;
@@ -29,7 +28,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 			j++;
 		}
 		if (little[j] == '\0')
-			return (&big[i]);
+			return ((char *) & big[i]);
 		i++;
 	}
 	return (0);

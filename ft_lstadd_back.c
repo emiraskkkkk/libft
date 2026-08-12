@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: masik <masik@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/06 14:30:07 by masik             #+#    #+#             */
-/*   Updated: 2026/08/13 00:12:46 by masik            ###   ########.fr       */
+/*   Created: 2026/08/12 15:53:37 by masik             #+#    #+#             */
+/*   Updated: 2026/08/12 16:00:25 by masik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (s[i] != '\0')
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*tmp;
+
+	if (!lst || !new)
+		return ;
+	if (!(*lst))
 	{
-		if (s[i] == (char) c)
-			return ((char *) & s[i]);
-		i++;
+		*lst = new;
+		return ;
 	}
-	if ((char) c == '\0')
-		return ((char *) & s[i]);
-	return (0);
+	tmp = *lst;
+	while (tmp->next)
+	{
+		tmp = tmp->next;
+	}
+	tmp->next = new;
 }
