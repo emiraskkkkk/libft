@@ -6,7 +6,7 @@
 /*   By: masik <masik@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/09 17:26:50 by masik             #+#    #+#             */
-/*   Updated: 2026/08/09 21:58:48 by masik            ###   ########.fr       */
+/*   Updated: 2026/08/14 16:03:33 by masik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	**ft_malloc_strs(char **strs, const char *s, char c)
 		if (s[i] != c)
 			count++;
 		if ((s[i] == c && i > 0 && s[i - 1] != c)
-				|| (s[i] != c && s[i + 1] == '\0'))
+			|| (s[i] != c && s[i + 1] == '\0'))
 		{
 			strs[x] = malloc(sizeof(char) * (count + 1));
 			if (!strs[x])

@@ -6,7 +6,7 @@
 /*   By: masik <masik@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 14:30:07 by masik             #+#    #+#             */
-/*   Updated: 2026/08/13 00:12:46 by masik            ###   ########.fr       */
+/*   Updated: 2026/08/14 21:27:39 by masik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	}
 	if ((char) c == '\0')
-		return ((char *) & s[i]);
+		return ((char *) &s[i]);
 	return (0);
 }
