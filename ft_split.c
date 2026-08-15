@@ -12,115 +12,79 @@
 
 #include "libft.h"
 
-static int	ft_count_words(const char *s, char c)
+static size_t	ft_count_words(char const *s, char c)
 {
-	int	words;
-	int	i;
+	size_t	count;
+	size_t	in_word;
+	size_t	i;
 
-	words = 0;
 	i = 0;
-	while (s[i])
-	{
-		if (i == 0 && s[i] != c)
-			words++;
-		if (i > 0 && s[i] != c && s[i - 1] == c)
-			words++;
-		i++;
-	}
-	return (words);
-}
-
-static char	**ft_malloc_strs(char **strs, const char *s, char c)
-{
-	int	count;
-	int	i;
-	int	x;
-
 	count = 0;
-	i = 0;
-	x = 0;
+	in_word = 0;
 	while (s[i])
 	{
-		if (s[i] != c)
+		if (s[i] != c && !in_word)
+		{
+			in_word = 1;
 			count++;
-		if ((s[i] == c && i > 0 && s[i - 1] != c)
-			|| (s[i] != c && s[i + 1] == '\0'))
-		{
-			strs[x] = malloc(sizeof(char) * (count + 1));
-			if (!strs[x])
-				return (NULL);
-			count = 0;
-			x++;
 		}
+		else if (s[i] == c)
+			in_word = 0;
 		i++;
 	}
-	return (strs);
+	return (count);
 }
 
-static char	**ft_cpy_strs(char **strs, const char *s, char c)
+static void	*ft_free_all(char **strs, size_t count)
 {
-	int	i;
-	int	x;
-	int	y;
+	size_t	i;
 
 	i = 0;
-	x = 0;
-	y = 0;
-	while (s[i])
-	{
-		if (s[i] != c)
-			strs[x][y++] = s[i];
-		if (s[i] != c && s[i + 1] == '\0')
-			strs[x][y] = '\0';
-		if (s[i] == c && i > 0 && s[i - 1] != c)
-		{
-			strs[x][y] = '\0';
-			x++;
-			y = 0;
-		}
-		i++;
-	}
-	return (strs);
-}
-
-static char	**ft_merror(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i])
+	while (i < count)
 	{
 		free(strs[i]);
-		strs[i] = NULL;
 		i++;
 	}
 	free(strs);
 	return (NULL);
 }
 
+static char	**ft_fill_words(char **strs, char const *s, char c)
+{
+	size_t	i;
+	size_t	word_idx;
+	size_t	len;
+
+	i = 0;
+	word_idx = 0;
+	while (s[i])
+	{
+		if (s[i] != c)
+		{
+			len = 0;
+			while (s[i + len] && s[i + len] != c)
+				len++;
+			strs[word_idx] = ft_substr(s, i, len);
+			if (!strs[word_idx])
+				return (ft_free_all(strs, word_idx));
+			word_idx++;
+			i += len;
+		}
+		else
+			i++;
+	}
+	strs[word_idx] = NULL;
+	return (strs);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**strs;
-	int		wordcount;
 
 	if (!s)
-	{
-		strs = malloc(sizeof(char) * 1);
-		if (!strs)
-			return (NULL);
-		*strs = NULL;
-		return (strs);
-	}
-	wordcount = ft_count_words(s, c);
-	strs = malloc(sizeof(*strs) * (wordcount + 1));
+		return (NULL);
+	strs = malloc(sizeof(char *) * (ft_count_words(s, c) + 1));
 	if (!strs)
 		return (NULL);
-	if (ft_malloc_strs(strs, s, c))
-	{
-		ft_cpy_strs(strs, s, c);
-		strs[wordcount] = NULL;
-	}
-	else
-		strs = ft_merror(strs);
-	return (strs);
+	return (ft_fill_words(strs, s, c));
 }
